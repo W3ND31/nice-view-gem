@@ -10,16 +10,22 @@ static void draw_gauge(lv_obj_t *canvas, const struct status_state *state) {
     lv_draw_img_dsc_t img_dsc;
     lv_draw_img_dsc_init(&img_dsc);
 
-    lv_canvas_draw_img(canvas, 16, 44 + BUFFER_OFFSET_MIDDLE, &gauge, &img_dsc);
+    lv_canvas_draw_img(canvas, 16, 44, &gauge, &img_dsc);
+    // lv_canvas_draw_img(canvas, 0, 70, &gauge, &img_dsc);
 }
 
 static void draw_needle(lv_obj_t *canvas, const struct status_state *state) {
     lv_draw_line_dsc_t line_dsc;
     init_line_dsc(&line_dsc, LVGL_FOREGROUND, 1);
 
-    int centerX = 33;
-    int centerY = 67 + BUFFER_OFFSET_MIDDLE;
-    int offset = 13;
+    // int centerX = 33;
+    // int centerY = 67 + BUFFER_OFFSET_MIDDLE;
+    // int offset = 13;
+    // int value = state->wpm[9];
+
+    int centerX = 12; // 16 default
+    int centerY = 90; // 100 gut, 66 default
+    int offset = 5;   // 5 def, largo de la aguja
     int value = state->wpm[9];
 
 #if IS_ENABLED(CONFIG_NICE_OLED_WPM_FIXED_RANGE)
@@ -56,7 +62,9 @@ static void draw_grid(lv_obj_t *canvas) {
     lv_draw_img_dsc_t img_dsc;
     lv_draw_img_dsc_init(&img_dsc);
 
-    lv_canvas_draw_img(canvas, 0, 65 + BUFFER_OFFSET_MIDDLE, &grid, &img_dsc);
+    // lv_canvas_draw_img(canvas, 0, 65 + BUFFER_OFFSET_MIDDLE, &grid, &img_dsc);
+    lv_canvas_draw_img(canvas, -1, 95, &grid, &img_dsc);
+    //  //  lv_canvas_draw_img(canvas, -1, 100, &grid, &img_dsc);
 }
 
 static void draw_graph(lv_obj_t *canvas, const struct status_state *state) {
@@ -64,7 +72,7 @@ static void draw_graph(lv_obj_t *canvas, const struct status_state *state) {
     init_line_dsc(&line_dsc, LVGL_FOREGROUND, 2);
     lv_point_t points[10];
 
-    int baselineY = 97 + BUFFER_OFFSET_MIDDLE;
+    int baselineY = 97;
 
 #if IS_ENABLED(CONFIG_NICE_OLED_WPM_FIXED_RANGE)
     int max = CONFIG_NICE_OLED_WPM_FIXED_RANGE_MAX;
